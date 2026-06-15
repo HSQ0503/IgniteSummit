@@ -1,26 +1,363 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   IGNITE SUMMIT — unified identity ("The Spark")
+   BizBuild (green, zine warmth) + Empower Teens United
+   (navy, gold, editorial) fused by a flame "ignite" gradient.
+   ============================================================ */
+
+@theme {
+  /* Foundation — ETU navy + shared warm cream */
+  --color-navy: #0f4566;
+  --color-navy-deep: #0a3146;
+  --color-navy-ink: #061b29;
+  --color-cream: #faf8f3;
+  --color-cream-2: #f5f2ea;
+
+  /* The "ignite" energy — gold → ember flame */
+  --color-gold: #fccc00;
+  --color-ember: #ff6a2c;
+  --color-flame: #ff8a3d;
+
+  /* BizBuild nod */
+  --color-green: #00cc99;
+  --color-green-deep: #089972;
+
+  /* Text */
+  --color-ink: #101820;
+  --color-body: #3a4754;
+  --color-muted: #6b7785;
+
+  /* Fonts (wired up in layout.tsx) */
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-navy-ink);
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Section container */
+  .ignite-container {
+    width: 100%;
+    max-width: 1160px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  /* Mono eyebrow label */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  /* The signature flame text */
+  .flame-text {
+    background: linear-gradient(100deg, var(--color-gold) 5%, var(--color-ember) 95%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Sticker badge — BizBuild zine nod (hard offset shadow) */
+  .sticker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    border: 2px solid var(--color-navy);
+    border-radius: 999px;
+    background: var(--color-cream);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-navy);
+    box-shadow: 3px 3px 0 var(--color-navy);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.95rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      transform 0.2s var(--ease-out-expo),
+      box-shadow 0.2s var(--ease-out-expo),
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .btn-flame {
+    background: linear-gradient(100deg, var(--color-gold) 0%, var(--color-ember) 100%);
+    color: var(--color-navy-ink);
+    box-shadow: 0 14px 30px -14px rgba(255, 106, 44, 0.7);
+  }
+  .btn-flame:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -16px rgba(255, 106, 44, 0.85);
+  }
+  .btn-navy {
+    background: var(--color-navy);
+    color: var(--color-cream);
+  }
+  .btn-navy:hover {
+    transform: translateY(-2px);
+    background: var(--color-navy-deep);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--color-navy);
+    border: 2px solid color-mix(in srgb, var(--color-navy), transparent 70%);
+  }
+  .btn-outline:hover {
+    border-color: var(--color-navy);
+    background: color-mix(in srgb, var(--color-navy), transparent 94%);
+  }
+
+  /* Card */
+  .card {
+    background: #ffffff;
+    border: 1px solid color-mix(in srgb, var(--color-navy), transparent 88%);
+    border-radius: 1.25rem;
+    box-shadow:
+      0 1px 2px rgba(15, 69, 102, 0.06),
+      0 12px 28px -18px rgba(15, 69, 102, 0.35);
+  }
+
+  /* Card with a flame accent bar + zine hard-offset lift on hover */
+  .card-accent {
+    position: relative;
+    transition:
+      transform 0.25s var(--ease-out-expo),
+      box-shadow 0.25s var(--ease-out-expo);
+  }
+  .card-accent::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 3px;
+    border-radius: 1.25rem 1.25rem 0 0;
+    background: var(--accent, linear-gradient(100deg, var(--color-gold), var(--color-ember)));
+  }
+  .card-accent:hover {
+    transform: translate(-2px, -2px);
+    box-shadow:
+      5px 5px 0 var(--color-navy),
+      0 16px 32px -20px rgba(15, 69, 102, 0.4);
+  }
+
+  /* Admit-One ticket (hero) */
+  .ticket {
+    position: relative;
+    background: #ffffff;
+    border: 2px solid var(--color-navy);
+    border-radius: 1rem;
+    box-shadow: 6px 6px 0 var(--color-navy);
+  }
+  .ticket-flame {
+    height: 4px;
+    background: linear-gradient(100deg, var(--color-gold), var(--color-ember));
+  }
+  .ticket-seam {
+    border-color: color-mix(in srgb, var(--color-navy), transparent 55%);
+  }
+
+  /* Form field */
+  .field {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1.5px solid color-mix(in srgb, var(--color-navy), transparent 82%);
+    border-radius: 0.7rem;
+    background: var(--color-cream);
+    font-size: 0.95rem;
+    color: var(--color-ink);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .field::placeholder {
+    color: var(--color-muted);
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-ember);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-ember), transparent 80%);
+    background: #fff;
+  }
+  .field-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    margin-bottom: 0.4rem;
+  }
+}
+
+@layer utilities {
+  /* Focus ring for keyboard users */
+  .focus-ring:focus-visible {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+
+  /* Scroll-reveal (paired with Reveal.tsx) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s var(--ease-out-expo),
+      transform 0.7s var(--ease-out-expo);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Pure-CSS hero entrance stagger (above the fold, no observer) */
+  .h-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: hero-in 0.8s var(--ease-out-expo) both;
+    animation-delay: var(--d, 0ms);
+  }
+
+  /* Living flame mark — wires up the existing flicker keyframe */
+  .flame-live {
+    transform-box: fill-box;
+    transform-origin: 50% 70%;
+    animation: flicker 2.6s ease-in-out infinite;
+    filter: drop-shadow(0 0 4px rgba(255, 138, 61, 0.45));
+  }
+
+  /* Countdown digit slides in when its value actually changes */
+  .digit-roll {
+    animation: digit-roll 0.45s var(--ease-out-expo);
+  }
+
+  /* Heat-line section divider (light → light seams only) */
+  .heat-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-gold), var(--color-ember), transparent);
+    opacity: 0.5;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  /* Sub-visible film grain — "quiet glue" over every band */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.025;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+  @media (prefers-contrast: more) {
+    .grain {
+      display: none;
+    }
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes hero-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes digit-roll {
+  from {
+    transform: translateY(0.55em);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .h-in {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .flame-live {
+    animation: none !important;
+    filter: none !important;
+  }
 }
