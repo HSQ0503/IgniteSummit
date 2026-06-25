@@ -27,13 +27,13 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ignite Summit — Where student founders take the stage",
+  title: "Ignite Summit — Where student leaders take the stage",
   description:
-    "A live showcase of student entrepreneurs hosted by BizBuild and Empower Teens United at the Cypress Center, Windermere Prep. Register to attend or apply to speak.",
+    "A live showcase of entrepreneurs and social impact leaders hosted by BizBuild and Empower Teens United at Windermere Preparatory School, Windermere, FL. Register to attend or apply to speak.",
   openGraph: {
     title: "Ignite Summit",
     description:
-      "Where student founders take the stage. A live showcase by BizBuild × Empower Teens United.",
+      "Where student leaders take the stage. A live showcase by BizBuild × Empower Teens United.",
     type: "website",
   },
 };

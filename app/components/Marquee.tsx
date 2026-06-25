@@ -2,15 +2,15 @@ import { SparkGlyph } from "./Brand";
 
 // Alternate Fraunces-italic phrases with mono micro-data for an editorial mix.
 const items: { text: string; kind: "phrase" | "data" }[] = [
-  { text: "Student founders", kind: "phrase" },
+  { text: "Student leaders", kind: "phrase" },
   { text: "Aug 16", kind: "data" },
   { text: "Live on stage", kind: "phrase" },
-  { text: "500 seats", kind: "data" },
+  { text: "300 seats", kind: "data" },
   { text: "Real businesses", kind: "phrase" },
   { text: "Free entry", kind: "data" },
   { text: "Pitch, present, connect", kind: "phrase" },
   { text: "Windermere, FL", kind: "data" },
-  { text: "TED meets late-night", kind: "phrase" },
+  { text: "Part talk, part late-night", kind: "phrase" },
   { text: "Est. 2026", kind: "data" },
 ];
 

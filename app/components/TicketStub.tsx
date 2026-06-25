@@ -14,7 +14,7 @@ export function TicketStub() {
           <div className="font-mono text-[0.7rem] uppercase tracking-[0.16em]">
             <div className="font-bold text-navy">{event.dateLabel}</div>
             <div className="mt-1 text-muted">
-              {event.venue.name} · {event.venue.cityState}
+              {event.venue.address} · {event.venue.cityState}
             </div>
           </div>
           <div className="mt-1.5 flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.16em]">
@@ -34,7 +34,7 @@ export function TicketStub() {
         <div className="flex items-center justify-between gap-4 bg-cream-2/50 px-5 py-4 sm:flex-col sm:justify-center sm:py-6">
           <div className="text-center font-mono uppercase tracking-[0.2em]">
             <div className="text-[0.62rem] font-bold text-ember">Admit One</div>
-            <div className="mt-1 text-[0.62rem] text-muted">No. 0500</div>
+            <div className="mt-1 text-[0.62rem] text-muted">No. 0300</div>
           </div>
           <div
             className="hidden font-mono text-[0.55rem] uppercase tracking-[0.3em] text-muted sm:block"

@@ -3,6 +3,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { event, formspreeUrl } from "@/lib/event";
 import { SectionHeading } from "./SectionHeading";
+import { SparkGlyph } from "./Brand";
 
 type Tab = "attend" | "speak";
 type Status = "idle" | "submitting" | "success" | "error";
@@ -10,6 +11,29 @@ type Status = "idle" | "submitting" | "success" | "error";
 function isPlaceholder(id: string) {
   return id.startsWith("YOUR_");
 }
+
+// "Add to Google Calendar" link, built from the single source of truth.
+function calendarUrl() {
+  const start = new Date(event.startsAtISO);
+  const end = new Date(start.getTime() + 90 * 60_000);
+  const stamp = (d: Date) =>
+    d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: event.name,
+    dates: `${stamp(start)}/${stamp(end)}`,
+    details: event.tagline,
+    location: `${event.venue.address}, ${event.venue.cityState}`,
+  });
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
+const summary = [
+  event.dateLabel,
+  event.doorsLabel,
+  `${event.venue.address}, ${event.venue.cityState}`,
+  `Free entry · ${event.venue.capacity} seats`,
+];
 
 export function Register() {
   const [tab, setTab] = useState<Tab>("attend");
@@ -37,36 +61,77 @@ export function Register() {
           </SectionHeading>
           <p className="mt-5 text-lg leading-relaxed text-body">
             Registration is free. Reserve a seat to attend, or apply to take the
-            stage as a student founder.
+            stage as a student leader.
           </p>
         </div>
 
-        {/* Tab switch */}
-        <div className="mx-auto mt-10 flex max-w-md rounded-full border border-navy/15 bg-white p-1.5">
-          {(
-            [
-              { id: "attend", label: "Reserve a seat" },
-              { id: "speak", label: "Apply to speak" },
-            ] as const
-          ).map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => setTab(t.id)}
-              aria-pressed={tab === t.id}
-              className={`focus-ring flex-1 rounded-full px-4 py-2.5 text-sm font-bold transition-colors ${
-                tab === t.id
-                  ? "bg-navy text-cream"
-                  : "text-body hover:text-navy"
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
+        <div className="mx-auto mt-12 grid max-w-5xl items-start gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+          {/* Left rail — the ticket stub: event facts at the point of action */}
+          <aside className="ticket overflow-hidden lg:sticky lg:top-24">
+            <div className="ticket-flame" />
+            <div className="p-6 sm:p-7">
+              <div className="font-mono text-[0.65rem] font-bold uppercase tracking-[0.2em] text-ember">
+                Admit One · {event.name}
+              </div>
+              <ul className="mt-5 space-y-3.5">
+                {summary.map((line) => (
+                  <li
+                    key={line}
+                    className="flex items-start gap-2.5 text-sm text-body"
+                  >
+                    <SparkGlyph className="mt-0.5 h-3 w-3 shrink-0" />
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="ticket-seam mt-6 border-t-2 border-dashed pt-5">
+                <p className="text-sm leading-relaxed text-muted">
+                  Four to five student leaders, one live audience. Reserve your
+                  seat — it&apos;s free.
+                </p>
+              </div>
+            </div>
+          </aside>
 
-        <div className="mx-auto mt-8 max-w-2xl">
-          {tab === "attend" ? <AttendForm /> : <SpeakForm />}
+          {/* Right — tabs + form */}
+          <div>
+            <div
+              role="tablist"
+              aria-label="Registration type"
+              className="relative flex rounded-full border border-navy/15 bg-white p-1.5"
+            >
+              <span
+                aria-hidden
+                className="absolute bottom-1.5 left-1.5 top-1.5 w-[calc(50%-0.375rem)] rounded-full bg-navy transition-transform duration-300"
+                style={{
+                  transform: tab === "speak" ? "translateX(100%)" : "translateX(0)",
+                }}
+              />
+              {(
+                [
+                  { id: "attend", label: "Reserve a seat" },
+                  { id: "speak", label: "Apply to speak" },
+                ] as const
+              ).map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={tab === t.id}
+                  onClick={() => setTab(t.id)}
+                  className={`focus-ring relative z-10 flex-1 rounded-full px-4 py-2.5 text-sm font-bold transition-colors ${
+                    tab === t.id ? "text-cream" : "text-body hover:text-navy"
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-6">
+              {tab === "attend" ? <AttendForm /> : <SpeakForm />}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -119,9 +184,15 @@ function useFormspree(formId: string) {
   return { status, error, submit };
 }
 
-function SuccessCard({ children }: { children: React.ReactNode }) {
+function SuccessCard({
+  children,
+  showEvent = true,
+}: {
+  children: React.ReactNode;
+  showEvent?: boolean;
+}) {
   return (
-    <div className="card flex flex-col items-center p-10 text-center">
+    <div className="card flex flex-col items-center p-8 text-center sm:p-10">
       <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green/15 text-green-deep">
         <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
           <path
@@ -137,6 +208,37 @@ function SuccessCard({ children }: { children: React.ReactNode }) {
         You&apos;re in!
       </h3>
       <p className="mt-2 max-w-sm text-body">{children}</p>
+
+      {showEvent && (
+        <>
+          <div className="mt-6 w-full max-w-xs rounded-xl border border-navy/10 bg-cream p-4 text-left">
+            <div className="flex items-center gap-2 text-sm font-semibold text-navy">
+              <SparkGlyph className="h-3.5 w-3.5 shrink-0" />
+              {event.dateLabel}
+            </div>
+            <div className="mt-1 pl-6 text-sm text-muted">
+              {event.doorsLabel} · {event.venue.cityState}
+            </div>
+          </div>
+          <a
+            href={calendarUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline focus-ring mt-5"
+          >
+            Add to calendar
+            <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" aria-hidden>
+              <path
+                d="M6 2v3m8-3v3M3 8h14M4.5 5h11a1 1 0 0 1 1 1v9.5a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
+        </>
+      )}
     </div>
   );
 }
@@ -150,6 +252,19 @@ function ErrorBanner({ message }: { message: string }) {
     >
       {message}
     </p>
+  );
+}
+
+function Reassurance({ items }: { items: string[] }) {
+  return (
+    <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-xs text-muted">
+      {items.map((x, i) => (
+        <span key={x} className="inline-flex items-center gap-3">
+          {i > 0 && <SparkGlyph className="h-2 w-2 shrink-0" />}
+          {x}
+        </span>
+      ))}
+    </div>
   );
 }
 
@@ -268,7 +383,7 @@ function AttendForm() {
     return (
       <SuccessCard>
         Your seat is reserved. We&apos;ll email you the details before the show —
-        see you at the Cypress Center.
+        see you at Windermere Prep.
       </SuccessCard>
     );
   }
@@ -317,9 +432,7 @@ function AttendForm() {
 
       <div className="mt-7">
         <SubmitButton status={status}>Reserve my seat</SubmitButton>
-        <p className="mt-3 text-center text-xs text-muted">
-          Free to attend · We&apos;ll only email you about Ignite Summit.
-        </p>
+        <Reassurance items={["Free entry", "2-minute form", "No spam, ever"]} />
       </div>
     </form>
   );
@@ -332,7 +445,7 @@ function SpeakForm() {
 
   if (status === "success") {
     return (
-      <SuccessCard>
+      <SuccessCard showEvent={false}>
         Application received. Our team will review it and reach out about the next
         steps. Thanks for putting yourself out there!
       </SuccessCard>
@@ -390,9 +503,7 @@ function SpeakForm() {
 
       <div className="mt-7">
         <SubmitButton status={status}>Submit my application</SubmitButton>
-        <p className="mt-3 text-center text-xs text-muted">
-          Applications are reviewed on a rolling basis.
-        </p>
+        <Reassurance items={["Rolling review", "We reply by email"]} />
       </div>
     </form>
   );

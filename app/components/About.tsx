@@ -5,7 +5,7 @@ import { SectionHeading } from "./SectionHeading";
 const features = [
   {
     title: "It's a show, not a seminar",
-    body: "Part TED talk, part late-night couch. Our emcee sits down with each founder — so it feels like a conversation, not a lecture.",
+    body: "Part talk show, part late-night couch. Our emcee sits down with each leader — so it feels like a conversation, not a lecture.",
     accent: "ember",
     icon: (
       <path
@@ -18,8 +18,8 @@ const features = [
     ),
   },
   {
-    title: "Real student founders",
-    body: "Four to five high school and college entrepreneurs take the stage to share the businesses they're actually building — wins, lessons, and all.",
+    title: "Real student leaders",
+    body: "Four to five high school and college entrepreneurs and social impact leaders take the stage to share what they're actually building — wins, lessons, and all.",
     accent: "green",
     icon: (
       <path
@@ -33,7 +33,7 @@ const features = [
   },
   {
     title: "Built for networking",
-    body: "Thirty minutes of mingling before, thirty after. Meet other student entrepreneurs, mentors, and collaborators in the room.",
+    body: "Thirty minutes of mingling before, thirty after. Meet other entrepreneurs and social impact leaders, mentors, and collaborators in the room.",
     accent: "gold",
     icon: (
       <path
@@ -59,34 +59,44 @@ export function About() {
       <div className="ignite-container">
         <Reveal className="mx-auto max-w-2xl text-center">
           <SectionHeading folio="01" eyebrow="What is Ignite Summit?">
-            One night. The next generation of founders,{" "}
+            One night. The next generation of leaders,{" "}
             <em className="font-semibold italic">live.</em>
           </SectionHeading>
           <p className="mt-5 text-lg leading-relaxed text-body">
-            BizBuild and Empower Teens United are joining forces to put student
-            entrepreneurs in front of a live, 500-seat audience — to present what
-            they&apos;re building and connect with the people who&apos;ll build the
-            future with them.
+            BizBuild and Empower Teens United are joining forces to put
+            entrepreneurs and social impact leaders in front of a live, 300-seat
+            audience — to present what they&apos;re building and connect with the
+            people who&apos;ll build the future with them.
           </p>
         </Reveal>
 
         <div className="mt-14 grid gap-6 md:grid-cols-3">
           {features.map((f, i) => (
-            <Reveal key={f.title} delay={i * 120} as="article">
+            <Reveal
+              key={f.title}
+              delay={i * 120}
+              as="article"
+              className="flex flex-col"
+            >
               <div
-                className="card card-accent h-full p-7"
+                className="card card-accent grow p-7"
                 style={{ "--accent": accentColor[f.accent] } as CSSProperties}
               >
-                <div
-                  className="flex h-12 w-12 items-center justify-center rounded-xl"
-                  style={{
-                    background: `color-mix(in srgb, ${accentColor[f.accent]}, transparent 88%)`,
-                    color: accentColor[f.accent],
-                  }}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
-                    {f.icon}
-                  </svg>
+                <div className="flex items-start justify-between">
+                  <div
+                    className="flex h-12 w-12 items-center justify-center rounded-xl"
+                    style={{
+                      background: `color-mix(in srgb, ${accentColor[f.accent]}, transparent 88%)`,
+                      color: accentColor[f.accent],
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
+                      {f.icon}
+                    </svg>
+                  </div>
+                  <span className="flame-text font-display text-3xl font-semibold italic leading-none">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                 </div>
                 <h3 className="mt-5 font-display text-xl font-bold text-navy">
                   {f.title}

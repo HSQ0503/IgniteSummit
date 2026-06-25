@@ -2,7 +2,7 @@ import { event } from "@/lib/event";
 import { Reveal } from "./Reveal";
 import { Stats } from "./Stats";
 import { SectionHeading } from "./SectionHeading";
-import { SparkGlyph } from "./Brand";
+import { SparkGlyph, FlameMark } from "./Brand";
 
 const kindStyle: Record<string, { dot: string; tag: string; label: string }> = {
   network: {
@@ -16,6 +16,8 @@ const kindStyle: Record<string, { dot: string; tag: string; label: string }> = {
     label: "Main stage",
   },
 };
+
+const acts = ["I", "II", "III", "IV", "V"];
 
 export function RunOfShow() {
   return (
@@ -54,13 +56,28 @@ export function RunOfShow() {
         </Reveal>
 
         {/* Timeline */}
-        <ol className="relative mt-12 space-y-7 border-l-2 border-cream/15 pl-7 sm:pl-9">
+        <ol className="relative mt-12 space-y-7 pl-7 sm:pl-9">
+          {/* Heat-line rail — replaces the flat border */}
+          <span
+            aria-hidden
+            className="absolute left-0 top-0 h-full w-0.5"
+            style={{
+              background:
+                "linear-gradient(to bottom, transparent, var(--color-gold), var(--color-ember), transparent)",
+              opacity: 0.55,
+              WebkitMaskImage:
+                "linear-gradient(to bottom, transparent, #000 5%, #000 92%, transparent)",
+              maskImage:
+                "linear-gradient(to bottom, transparent, #000 5%, #000 92%, transparent)",
+            }}
+          />
+
           {event.schedule.map((item, i) => {
             const k = kindStyle[item.kind];
             const [tnum, tmer] = item.time.split(" ");
+            const isShow = item.kind === "show";
             return (
               <Reveal key={item.time} as="li" delay={i * 120} className="relative">
-                {/* Spark "house light" on the rail */}
                 {/* Colored bloom (act type) behind the spark "house light" */}
                 <span
                   aria-hidden
@@ -82,13 +99,22 @@ export function RunOfShow() {
                     </span>
                   </div>
 
-                  <div className="rounded-2xl border border-cream/10 bg-cream/[0.04] p-5 backdrop-blur-sm transition-colors hover:bg-cream/[0.07] sm:p-6">
-                    <span
-                      className="inline-block rounded-full px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-widest text-cream"
-                      style={{ background: k.tag }}
-                    >
-                      {k.label} · {item.duration}
-                    </span>
+                  <div
+                    className={`rounded-2xl border border-cream/10 p-5 backdrop-blur-sm transition-colors sm:p-6 ${
+                      isShow
+                        ? "bg-cream/[0.07] ring-1 ring-ember/25 hover:bg-cream/[0.09]"
+                        : "bg-cream/[0.04] hover:bg-cream/[0.07]"
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                      <span className="eyebrow text-gold/90">Act {acts[i] ?? i + 1}</span>
+                      <span
+                        className="inline-block rounded-full px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-widest text-cream"
+                        style={{ background: k.tag }}
+                      >
+                        {k.label} · {item.duration}
+                      </span>
+                    </div>
                     <h3 className="mt-3 font-display text-2xl font-bold text-cream">
                       {item.title}
                     </h3>
@@ -100,6 +126,11 @@ export function RunOfShow() {
               </Reveal>
             );
           })}
+
+          {/* Rail terminator — the night ends on a flame */}
+          <span aria-hidden className="absolute -bottom-2 -left-[0.75rem]">
+            <FlameMark live className="h-6 w-6" />
+          </span>
         </ol>
 
         {/* Stats band */}

@@ -34,9 +34,9 @@ export function Hero() {
         <HeroReveal delay={0}>
           <h1
             className="mx-auto mt-7 max-w-4xl text-center font-display font-bold leading-[0.92] tracking-tight text-navy"
-            style={{ fontSize: "clamp(3rem, 9vw, 6.5rem)" }}
+            style={{ fontSize: "clamp(3rem, 9vw, 7.25rem)" }}
           >
-            <span className="flame-text">Ignite</span> Summit
+            <span className="flame-text italic">Ignite</span> Summit
           </h1>
         </HeroReveal>
 

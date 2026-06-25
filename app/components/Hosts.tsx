@@ -22,18 +22,37 @@ export function Hosts() {
           <p className="mt-5 text-lg leading-relaxed text-body">
             Ignite Summit is co-hosted by two student-led organizations on a
             shared mission: giving young people the confidence, skills, and stage
-            to build what&apos;s next.
+            to{" "}
+            <span className="flame-text font-semibold">build what&apos;s next.</span>
           </p>
         </Reveal>
 
         {/* Structural duality: the two brands meet at a co-host spark. */}
         <Reveal className="mx-auto mt-14 grid max-w-4xl items-stretch gap-6 md:grid-cols-[1fr_auto_1fr] md:gap-3">
           <HostCard host={a} />
-          <div aria-hidden className="flex items-center justify-center py-1 md:py-0">
+          {/* Connector — heat-line bleeds into the spark that joins them */}
+          <div
+            aria-hidden
+            className="flex items-center justify-center gap-3 py-1 md:flex-col md:py-0"
+          >
+            <span
+              className="h-px w-12 md:h-12 md:w-px"
+              style={{
+                background:
+                  "linear-gradient(to right, transparent, color-mix(in srgb, var(--color-gold), transparent 35%))",
+              }}
+            />
             <SparkGlyph
               cohost
               title="BizBuild and Empower Teens United, together"
-              className="h-9 w-9"
+              className="h-9 w-9 shrink-0"
+            />
+            <span
+              className="h-px w-12 md:h-12 md:w-px"
+              style={{
+                background:
+                  "linear-gradient(to right, color-mix(in srgb, var(--color-ember), transparent 35%), transparent)",
+              }}
             />
           </div>
           <HostCard host={b} />
@@ -47,11 +66,11 @@ function HostCard({ host }: { host: (typeof event.hosts)[number] }) {
   const b = brand[host.key];
   return (
     <article
-      className="card card-accent h-full overflow-hidden p-8"
+      className="card card-accent flex h-full flex-col overflow-hidden p-8"
       style={{ "--accent": b.color } as CSSProperties}
     >
       <span
-        className="inline-flex items-center rounded-full px-3 py-1 font-mono text-[0.65rem] uppercase tracking-widest"
+        className="inline-flex w-fit items-center rounded-full px-3 py-1 font-mono text-[0.65rem] uppercase tracking-widest"
         style={{ background: b.soft, color: b.color }}
       >
         Co-host
@@ -60,12 +79,31 @@ function HostCard({ host }: { host: (typeof event.hosts)[number] }) {
         {host.name}
       </h3>
       <p className="mt-3 leading-relaxed text-body">{host.blurb}</p>
+
+      <ul className="mt-5 flex flex-wrap gap-2">
+        {host.tags.map((t) => (
+          <li
+            key={t}
+            className="rounded-full border px-2.5 py-1 font-mono text-[0.62rem] uppercase tracking-[0.12em]"
+            style={{
+              borderColor: `color-mix(in srgb, ${b.color}, transparent 72%)`,
+              color: b.color,
+            }}
+          >
+            {t}
+          </li>
+        ))}
+      </ul>
+
       <a
         href={host.site}
         target="_blank"
         rel="noopener noreferrer"
-        className="focus-ring mt-5 inline-flex items-center gap-1.5 rounded text-sm font-semibold"
-        style={{ color: b.color }}
+        className="focus-ring mt-6 inline-flex w-fit items-center gap-1.5 rounded-full border-2 px-4 py-2 text-sm font-semibold transition-colors"
+        style={{
+          borderColor: `color-mix(in srgb, ${b.color}, transparent 60%)`,
+          color: b.color,
+        }}
       >
         Learn more
         <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none" aria-hidden>

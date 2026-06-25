@@ -3,22 +3,23 @@
 
 export const event = {
   name: "Ignite Summit",
-  tagline: "Where student founders take the stage.",
+  tagline: "Where student leaders take the stage.",
   // The live-show pitch, in one breath.
   intro:
-    "A live showcase of student entrepreneurs — part TED talk, part late-night show. Real founders, a real audience, and an emcee keeping the energy high.",
+    "A live showcase of entrepreneurs and social impact leaders — part conversation, part late-night show. Real leaders, a real audience, and an emcee keeping the energy high.",
 
-  // ⚠️ PLACEHOLDER — set the real event date/time here (ISO 8601, local time).
-  // The countdown and date labels are generated from this.
-  startsAtISO: "2026-08-16T18:00:00-04:00",
+  // Event date/time (ISO 8601, local time). Check-in opens 5:45 PM;
+  // the show starts 6:30 PM. The countdown and date labels read from this.
+  startsAtISO: "2026-08-16T18:30:00-04:00",
   dateLabel: "Sunday, August 16, 2026",
-  doorsLabel: "Doors 6:00 PM",
+  doorsLabel: "Check-in 5:45–6:25 PM",
 
   venue: {
     name: "The Cypress Center",
     org: "Windermere Preparatory School",
-    cityState: "Windermere, FL",
-    capacity: 500,
+    address: "6189 Winter Garden Vineland Rd",
+    cityState: "Windermere, FL 34786",
+    capacity: 300,
   },
 
   hosts: [
@@ -28,30 +29,32 @@ export const event = {
       blurb:
         "A nonprofit empowering the next generation of entrepreneurs through mentorship, competition, and hands-on experience.",
       site: "https://bizbuild.org",
+      tags: ["Mentorship", "Competition", "Hands-on"],
     },
     {
       key: "etu",
       name: "Empower Teens United",
       blurb:
-        "Free mentorship, leadership, and emotional-wellness programs that equip teens with confidence and purpose.",
+        "Empower Teens United equips students and families to understand educational pathways, access mentorship, and pursue leadership and career opportunities.",
       site: "#",
+      tags: ["Pathways", "Mentorship", "Leadership"],
     },
   ],
 
   // Run of show — the night, start to finish.
   schedule: [
     {
-      time: "6:00 PM",
-      title: "Doors & Networking",
-      duration: "30 min",
-      body: "Arrive early. Meet founders, students, and mentors over refreshments outside the auditorium.",
+      time: "5:45 PM",
+      title: "Check-in & Networking",
+      duration: "40 min",
+      body: "Check in between 5:45 and 6:25. Meet leaders, students, and mentors over refreshments outside the auditorium.",
       kind: "network",
     },
     {
       time: "6:30 PM",
       title: "The Show",
       duration: "60 min",
-      body: "Four to five student founders take the stage — pitching, presenting, and trading stories with our emcee in front of a live audience.",
+      body: "Four to five student leaders take the stage — pitching, presenting, and trading stories with our emcee in front of a live audience.",
       kind: "show",
     },
     {
@@ -64,10 +67,10 @@ export const event = {
   ],
 
   stats: [
-    { value: 500, suffix: "", label: "Seats in the Cypress Center" },
-    { value: 5, suffix: "", label: "Student founders on stage" },
+    { value: 300, suffix: "", label: "Seats in the room" },
+    { value: 5, suffix: "", label: "Student leaders on stage" },
     { value: 2, suffix: "", label: "Nonprofits, one night" },
-    { value: 120, suffix: "min", label: "Of talks + networking" },
+    { value: 130, suffix: "min", label: "Of talks + networking" },
   ],
 
   // ⚠️ PLACEHOLDER — paste your Formspree form IDs (https://formspree.io).
