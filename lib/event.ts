@@ -10,8 +10,8 @@ export const event = {
 
   // Event date/time (ISO 8601, local time). Check-in opens 5:45 PM;
   // the show starts 6:30 PM. The countdown and date labels read from this.
-  startsAtISO: "2026-08-16T18:30:00-04:00",
-  dateLabel: "Sunday, August 16, 2026",
+  startsAtISO: "2026-08-20T18:30:00-04:00",
+  dateLabel: "Thursday, August 20, 2026",
   doorsLabel: "Check-in 5:45–6:25 PM",
 
   venue: {

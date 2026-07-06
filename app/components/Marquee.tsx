@@ -3,7 +3,7 @@ import { SparkGlyph } from "./Brand";
 // Alternate Fraunces-italic phrases with mono micro-data for an editorial mix.
 const items: { text: string; kind: "phrase" | "data" }[] = [
   { text: "Student leaders", kind: "phrase" },
-  { text: "Aug 16", kind: "data" },
+  { text: "Aug 20", kind: "data" },
   { text: "Live on stage", kind: "phrase" },
   { text: "300 seats", kind: "data" },
   { text: "Real businesses", kind: "phrase" },
