@@ -73,19 +73,11 @@ export const event = {
     { value: 130, suffix: "min", label: "Of talks + networking" },
   ],
 
-  // ⚠️ PLACEHOLDER — paste your Formspree form IDs (https://formspree.io).
-  // Each form's "endpoint" looks like https://formspree.io/f/abcdwxyz — use just the id.
-  // Prefer a Google Form / Tally iframe instead? Swap the <RegistrationForm/> for an
-  // <iframe> in app/components/Register.tsx — the section wrapper stays the same.
-  forms: {
-    registerId: "YOUR_FORMSPREE_REGISTER_ID",
-    speakerId: "YOUR_FORMSPREE_SPEAKER_ID",
-  },
+  // Registration + speaker submissions POST to /api/register, which emails the
+  // organizers via Resend. Recipients live in app/api/register/route.ts.
 
   social: {
     instagram: "#",
     email: "hello@ignitesummit.org",
   },
 } as const;
-
-export const formspreeUrl = (id: string) => `https://formspree.io/f/${id}`;

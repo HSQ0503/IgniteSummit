@@ -1,16 +1,12 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { event, formspreeUrl } from "@/lib/event";
+import { event } from "@/lib/event";
 import { SectionHeading } from "./SectionHeading";
 import { SparkGlyph } from "./Brand";
 
 type Tab = "attend" | "speak";
 type Status = "idle" | "submitting" | "success" | "error";
-
-function isPlaceholder(id: string) {
-  return id.startsWith("YOUR_");
-}
 
 // "Add to Google Calendar" link, built from the single source of truth.
 function calendarUrl() {
@@ -140,7 +136,7 @@ export function Register() {
 
 /* ---------- shared form chrome ---------- */
 
-function useFormspree(formId: string) {
+function useSubmit() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
 
@@ -148,20 +144,11 @@ function useFormspree(formId: string) {
     e.preventDefault();
     const form = e.currentTarget;
 
-    if (isPlaceholder(formId)) {
-      setStatus("error");
-      setError(
-        "This form isn't connected yet. Add your Formspree form ID in lib/event.ts.",
-      );
-      return;
-    }
-
     setStatus("submitting");
     setError("");
     try {
-      const res = await fetch(formspreeUrl(formId), {
+      const res = await fetch("/api/register", {
         method: "POST",
-        headers: { Accept: "application/json" },
         body: new FormData(form),
       });
       if (res.ok) {
@@ -377,7 +364,7 @@ function SubmitButton({ status, children }: { status: Status; children: string }
 /* ---------- Attend form ---------- */
 
 function AttendForm() {
-  const { status, error, submit } = useFormspree(event.forms.registerId);
+  const { status, error, submit } = useSubmit();
 
   if (status === "success") {
     return (
@@ -441,7 +428,7 @@ function AttendForm() {
 /* ---------- Speak form ---------- */
 
 function SpeakForm() {
-  const { status, error, submit } = useFormspree(event.forms.speakerId);
+  const { status, error, submit } = useSubmit();
 
   if (status === "success") {
     return (
