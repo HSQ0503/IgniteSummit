@@ -8,9 +8,9 @@ const NOTIFY = [
 ];
 
 // The sender must be on a Resend-verified domain to deliver in production.
-// Without RESEND_FROM set, we fall back to Resend's shared test sender, which
-// only delivers to the Resend account owner — set RESEND_FROM in Vercel.
-const FROM = process.env.RESEND_FROM ?? "Ignite Summit <onboarding@resend.dev>";
+// ignitesummit2026.com is verified in the Resend account; RESEND_FROM can
+// override without a code change.
+const FROM = process.env.RESEND_FROM ?? "Ignite Summit <hello@ignitesummit2026.com>";
 
 // Form plumbing we don't want to show in the notification body.
 const HIDDEN = new Set(["form_type", "_subject"]);
